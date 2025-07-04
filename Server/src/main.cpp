@@ -5,40 +5,59 @@
 #include <stdio.h>
 #include <string.h>
 
+const int MAX = 4096;
+
+int fd;
+struct sockaddr_in addr;
+
 int main(int argc, char* argv[])
 {
-    int fd = socket(AF_INET, SOCK_STREAM, 0);
-    
-    struct sockaddr_in address;
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = inet_addr("192.168.1.130");
-    address.sin_port = htons(8080);
-    bind(fd, (struct sockaddr*)&address, sizeof(address));
+    fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (fd < 0)
+    {
+        printf("Failed to create socket!");
+        return -1;
+    }
+
+    addr.sin_family = AF_INET;
+    addr.sin_addr.s_addr = inet_addr("192.168.1.130");
+    addr.sin_port = htons(8080);
+    if (bind(fd, (struct sockaddr*)&addr, sizeof(addr)) < 0)
+    {
+        printf("Failed to bind socket!");
+        return -1;
+    }
 
     listen(fd, 0);
 
     printf("Server is Running!\n");
-    int addrlen = sizeof(address);
-    int new_socket = accept(fd, (struct sockaddr*)&address, (socklen_t*)&addrlen);
-
-    if (new_socket < 0)
-    {
-        printf("Failed to accept connection.\n");
-        return(-1);
-    }
     
     while (true)
     {
-        printf("Connection accepted.\n");
+        int addrlen = sizeof(addr);
+        int new_socket = accept(fd, (struct sockaddr*)&addr, (socklen_t*)&addrlen);
 
-        char rdbuf[4096] = {0};
-        read(new_socket, rdbuf, 4096);
-        printf("Client Message: %s\n", rdbuf);
+        if (new_socket < 0)
+        {
+            printf("Failed to accept connection.\n");
+            return(-1);
+        }
 
-        const char* response = "Hello From Server!";
-        write(new_socket, response, strlen(response));
+        char buff[MAX];
+        while (true)
+        {
+            bzero(buff, sizeof(buff));
+            read(new_socket, buff, sizeof(buff));
+            printf("client: %s", buff);
+            bzero(buff, sizeof(buff));
+            buff[0] = 'E'; buff[1] = '\n';
+            write(new_socket, buff, sizeof(buff));
+
+        }
+
+        close(new_socket);
+
     }
-    close(new_socket);
 
     return 0;
 }
