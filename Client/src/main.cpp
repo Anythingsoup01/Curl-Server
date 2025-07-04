@@ -47,14 +47,11 @@ int main(int argc, char* argv[])
 
         write(fd, buff, sizeof(buff));
 
-
-        if (strncmp(buff, "exit", 4) == 0)
-            break;
-
         bzero(buff, sizeof(buff));
         read(fd, buff, sizeof(buff));
-        printf("%s\n", buff);
-
+        printf("%s", buff);
+        if (strncmp(buff, "exit", 4) == 0)
+            break;
     }
 
     close(fd);
