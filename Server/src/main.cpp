@@ -26,7 +26,7 @@ class ServerStorage
             std::string name = in.substr(0, space);
             std::string url = in.substr(space + 1, eol);
 
-            if (name.empty() | url.empty())
+            if (name.empty() || url.empty())
                 return false;
 
             printf("%s", in.c_str());
