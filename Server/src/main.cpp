@@ -61,14 +61,13 @@ class ServerStorage
 
                 pos = eow;
             }
-            
             return true;
         }
 
         
     private:
         //                        File Name    url
-        static std::unordered_map<std::string, std::string> s_CurlList;
+        static inline std::unordered_map<std::string, std::string> s_CurlList = std::unordered_map<std::string, std::string>();
 
 };
 
