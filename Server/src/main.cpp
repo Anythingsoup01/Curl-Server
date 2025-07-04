@@ -31,6 +31,13 @@ int main(int argc, char* argv[])
         return -1;
     }
 
+    int enable = 1;
+    if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) < 0)
+    {
+        printf("Failed to set socket option!");
+        return -1;
+    }
+
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = inet_addr(argv[1]);
     addr.sin_port = htons(8080);
