@@ -10,6 +10,15 @@ const int MAX = 4096;
 int fd;
 struct sockaddr_in addr;
 
+
+void ParseInput(const char input[])
+{
+    if (strncmp(input, "list", 4))
+    {
+        printf("Listing all entries");
+    }
+}
+
 int main(int argc, char* argv[])
 {
     fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -43,19 +52,20 @@ int main(int argc, char* argv[])
             return(-1);
         }
 
-        char buff[MAX];
+        char buffin[MAX];
+        char buffout[MAX];
         while (true)
         {
-            bzero(buff, sizeof(buff));
-            read(new_socket, buff, sizeof(buff));
-            if (strncmp(buff, "exit", 4) == 0)
+            bzero(buffin, sizeof(buffin));
+            read(new_socket, buffin, sizeof(buffin));
+            if (strncmp(buffin, "exit", 4) == 0)
             {
                 break;
             }
-            printf("client: %s", buff);
-            bzero(buff, sizeof(buff));
-            buff[0] = 'E';
-            write(new_socket, buff, sizeof(buff));
+            printf("client: %s", buffin);
+            bzero(buffout, sizeof(buffout));
+
+            write(new_socket, buffout, sizeof(buffout));
 
         }
 
