@@ -67,15 +67,21 @@ int main(int argc, char* argv[])
             printf("client: %s", buffin);
             printf("expected out: %s\n", buffout);
             write(new_socket, buffout, strlen(buffout));
-            if (strncmp(buffin, "exit", 4) == 0)
+            if (strncmp(buffin, "exit", 4) == 0 | strncmp(buffin, "shutdown", 8) == 0)
                 break;
         }
+
 
         printf("Client not connected.\n");
 
         close(new_socket);
 
+        if (strncmp(buffin, "shutdown", 8) == 0)
+            break;
+
     }
+
+    close(fd);
 
     return 0;
 }
