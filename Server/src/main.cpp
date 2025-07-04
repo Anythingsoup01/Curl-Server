@@ -53,6 +53,7 @@ class ServerStorage
                 size_t eow = in.find_first_of(" ", pos + 1);
 
                 std::string word = in.substr(pos, eow - pos);
+                word.erase(remove_if(word.begin(), word.end(), isspace), word.end());
                 printf("Keyword: %s\n", word.c_str());
 
                 pos = eow;
