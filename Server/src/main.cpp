@@ -51,7 +51,7 @@ class ServerStorage
             while (pos != std::string::npos)
             {
                 size_t eow = in.find_first_of(' ', pos);
-                if (eow == std::string::npos || eow == eol)
+                if (eow == std::string::npos || eow == pos)
                 {
                     // this means we are done looking through the list;
                     break;
