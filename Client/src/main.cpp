@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
     }
 
     addr.sin_family = AF_INET;
-    addr.sin_addr.s_addr = inet_addr("192.168.1.130");
+    addr.sin_addr.s_addr = inet_addr("192.168.1.125");
     addr.sin_port = htons(8080);
     
     if (connect(fd, (struct sockaddr*)&addr, sizeof(addr)) != 0)
@@ -47,11 +47,14 @@ int main(int argc, char* argv[])
 
         write(fd, buff, sizeof(buff));
 
-        bzero(buff, sizeof(buff));
-        read(fd, buff, sizeof(buff));
-        printf("%s", buff);
+
         if (strncmp(buff, "exit", 4) == 0)
             break;
+
+        bzero(buff, sizeof(buff));
+        read(fd, buff, sizeof(buff));
+        printf("%s\n", buff);
+
     }
 
     close(fd);

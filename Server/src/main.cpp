@@ -48,15 +48,14 @@ int main(int argc, char* argv[])
         {
             bzero(buff, sizeof(buff));
             read(new_socket, buff, sizeof(buff));
-            printf("client: %s", buff);
-            bzero(buff, sizeof(buff));
-            buff[0] = 'E'; buff[1] = '\n';
-            write(new_socket, buff, sizeof(buff));
-
             if (strncmp(buff, "exit", 4) == 0)
             {
                 break;
             }
+            printf("client: %s", buff);
+            bzero(buff, sizeof(buff));
+            buff[0] = 'E';
+            write(new_socket, buff, sizeof(buff));
 
         }
 
