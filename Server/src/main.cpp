@@ -15,7 +15,7 @@ const char* ParseInput(const char input[])
 {
     if (strncmp(input, "list", 4) == 0)
     {
-        return "Listingallentries";
+        return "Listing all entries";
     }
 
     return "";
