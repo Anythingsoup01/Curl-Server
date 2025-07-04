@@ -19,7 +19,7 @@ char* ParseInput(const char input[])
     if (strncmp(input, "list", 4) == 0)
     {
         out->append("listing all entries");
-        data = out->data();
+        return out->data();
     }
 
     delete(out);
