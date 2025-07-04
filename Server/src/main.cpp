@@ -62,6 +62,7 @@ class ServerStorage
                 pos = eow;
             }
             
+            return true;
         }
 
         
