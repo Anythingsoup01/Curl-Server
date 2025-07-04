@@ -13,12 +13,13 @@ struct sockaddr_in addr;
 
 const char* ParseInput(const char input[])
 {
-    if (strncmp(input, "list", 4) == 0)
-    {
-        return "Listing all entries";
-    }
+    if (strncmp(input, "exit", 4) == 0)
+        return "Goodbye!";
 
-    return "";
+    if (strncmp(input, "list", 4) == 0)
+        return "Listing all entries";
+
+    return "Command Not Found!";
 }
 
 int main(int argc, char* argv[])
