@@ -7,7 +7,9 @@
 
 #include <string>
 #include <algorithm>
+
 #include <unordered_map>
+#include <vector>
 
 class ServerStorage
 {
@@ -32,18 +34,40 @@ class ServerStorage
             if (name.empty() || url.empty())
                 return false;
 
-            printf("%s", in.c_str());
+            s_CurlList.emplace(std::make_pair(name, url));
 
             return true;
         }
 
         static bool RemoveData(const char* input)
         {
+            // This will only come from the 'remove' command, so we can ignore the first 7 bytes
+            std::string in(input);
+            in.erase(0, 7); // This should technically be all, but we will assume there are multiple names in here
 
+            std::vector<std::string> listToRemove;
+            size_t pos = 0;
+            size_t eol = in.find("\r\n");
+            while (pos != std::string::npos)
+            {
+                size_t eow = in.find_first_of(' ', pos);
+                if (eow == std::string::npos || eow == eol)
+                {
+                    // this means we are done looking through the list;
+                    break;
+                }
+                std::string word = in.substr(pos, eow);
+                printf("Keyword: %s\n", word.c_str());
+
+                pos = eow;
+            }
+            
         }
 
         
     private:
+        //                        File Name    url
+        static std::unordered_map<std::string, std::string> s_CurlList;
 
 };
 
