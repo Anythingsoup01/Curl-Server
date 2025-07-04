@@ -43,14 +43,14 @@ class ServerStorage
         {
             // This will only come from the 'remove' command, so we can ignore the first 7 bytes
             std::string in(input);
-            in.erase(0, 7); // This should technically be all, but we will assume there are multiple names in here
+            in.erase(0, 6); // This should technically be all, but we will assume there are multiple names in here
 
             std::vector<std::string> listToRemove;
             size_t pos = 0;
             size_t eol = in.find("\r\n");
             while (pos != std::string::npos)
             {
-                size_t eow = in.find_first_of(' ', pos + 1);
+                size_t eow = in.find_first_of(" ", pos + 1);
 
                 std::string word = in.substr(pos + 1, eow);
                 printf("Keyword: %s\n", word.c_str());
