@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <string>
 
 const int MAX = 4096;
 
@@ -11,14 +12,18 @@ int fd;
 struct sockaddr_in addr;
 
 
-const char* ParseInput(const char input[])
+char* ParseInput(const char input[])
 {
+    std::string* out = new std::string();
+    char* data;
     if (strncmp(input, "list", 4) == 0)
     {
-        return "Listing\ all\ entries";
+        out->append("listing all entries");
+        data = out->data();
     }
 
-    return "";
+    delete(out);
+    return data;
 }
 
 int main(int argc, char* argv[])
@@ -54,6 +59,8 @@ int main(int argc, char* argv[])
             return(-1);
         }
 
+        printf("Client connected.\n");
+
         char buffin[MAX];
         char* buffout;
         while (true)
@@ -66,6 +73,8 @@ int main(int argc, char* argv[])
             if (strncmp(buffin, "exit", 4) == 0)
                 break;
         }
+
+        printf("Client not connected.\n");
 
         close(new_socket);
 
