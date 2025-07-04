@@ -51,12 +51,7 @@ class ServerStorage
             while (pos != std::string::npos)
             {
                 size_t eow = in.find_first_of(' ', pos + 1);
-                if (eow == std::string::npos)
-                {
-                    // this means we are done looking through the list;
-                    std::string word = in.substr(pos, eol);
-                    printf("Keyword: %s\n", word.c_str());
-                }
+
                 std::string word = in.substr(pos, eow);
                 printf("Keyword: %s\n", word.c_str());
 
