@@ -16,7 +16,18 @@ class ServerStorage
         {
             // This will only come from the 'add' command, so we can ignore the first 4 bytes
             std::string in(input); 
-            in.erase(0, 3);
+            in.erase(0, 4);
+            size_t space = in.find(' ');
+            size_t eol = in.find("\r\n");
+
+            if (space == std::string::npos)
+                return false;
+
+            std::string name = in.substr(0, space);
+            std::string url = in.substr(space + 1, eol);
+
+            if (name.empty() | url.empty())
+                return false;
 
             printf("%s", in.c_str());
 
