@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
         if (strlen(buffout) > 0)
             printf("%s\n", buffout);
 
-        if (strncmp(buffin, "exit", 4) == 0)
+        if (strncmp(buffin, "exit", 4) == 0 | strncmp(buffin, "shutdown", 8) == 0)
             break;
     }
 

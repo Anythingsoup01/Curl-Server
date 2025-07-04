@@ -16,6 +16,9 @@ const char* ParseInput(const char input[])
     if (strncmp(input, "exit", 4) == 0)
         return "Goodbye!";
 
+    if (strncmp(input, "shutdown", 8) == 0)
+        return "Shutting down server.";
+
     if (strncmp(input, "list", 4) == 0)
         return "Listing all entries";
 
