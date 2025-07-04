@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     fd = socket(AF_INET, SOCK_STREAM, 0);
     if (fd < 0)
     {
-        printf("Failed to create socket!");
+        printf("Failed to create socket!\n");
         return -1;
     }
 
@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
     addr.sin_port = htons(8080);
     if (bind(fd, (struct sockaddr*)&addr, sizeof(addr)) < 0)
     {
-        printf("Failed to bind socket!");
+        printf("Failed to bind socket!\n");
         return -1;
     }
 
