@@ -15,35 +15,30 @@ int main(int argc, char* argv[])
     address.sin_port = htons(8080);
     bind(fd, (struct sockaddr*)&address, sizeof(address));
 
-    listen(fd, 3);
+    listen(fd, 0);
 
     printf("Server is Running!\n");
+    int addrlen = sizeof(address);
+    int new_socket = accept(fd, (struct sockaddr*)&address, (socklen_t*)&addrlen);
 
+    if (new_socket < 0)
+    {
+        printf("Failed to accept connection.\n");
+        return(-1);
+    }
+    
     while (true)
     {
-        int addrlen = sizeof(address);
-        int new_socket = accept(fd, (struct sockaddr*)&address, (socklen_t*)&addrlen);
-
-        if (new_socket < 0)
-        {
-            printf("Failed to accept connection.\n");
-            continue;
-        }
-
         printf("Connection accepted.\n");
 
-        char rdbuf[1024] = {0};
-        read(new_socket, rdbuf, 1024);
+        char rdbuf[4096] = {0};
+        read(new_socket, rdbuf, 4096);
         printf("Client Message: %s\n", rdbuf);
 
         const char* response = "Hello From Server!";
         write(new_socket, response, strlen(response));
-
-        close(new_socket);
-        printf("Closed Connection");
     }
-
-    close(fd);
+    close(new_socket);
 
     return 0;
 }
