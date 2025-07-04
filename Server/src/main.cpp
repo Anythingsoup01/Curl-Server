@@ -6,7 +6,7 @@
 #include <string.h>
 
 #include <string>
-
+#include <algorithm>
 #include <unordered_map>
 
 class ServerStorage
@@ -25,6 +25,9 @@ class ServerStorage
 
             std::string name = in.substr(0, space);
             std::string url = in.substr(space + 1, eol);
+
+            name.erase(remove_if(name.begin(), name.end(), isspace), name.end());
+            url.erase(remove_if(url.begin(), url.end(), isspace), url.end());
 
             if (name.empty() || url.empty())
                 return false;
