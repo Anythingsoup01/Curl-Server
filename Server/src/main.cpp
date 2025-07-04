@@ -54,7 +54,8 @@ class ServerStorage
                 if (eow == std::string::npos)
                 {
                     // this means we are done looking through the list;
-                    break;
+                    std::string word = in.substr(pos, eol);
+                    printf("Keyword: %s\n", word.c_str());
                 }
                 std::string word = in.substr(pos, eow);
                 printf("Keyword: %s\n", word.c_str());
