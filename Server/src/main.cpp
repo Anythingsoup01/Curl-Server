@@ -11,12 +11,14 @@ int fd;
 struct sockaddr_in addr;
 
 
-void ParseInput(const char input[])
+const char* ParseInput(const char input[])
 {
     if (strncmp(input, "list", 4) == 0)
     {
-        printf("Listing all entries");
+        return "Listing all entries";
     }
+
+    return "";
 }
 
 int main(int argc, char* argv[])
@@ -53,7 +55,7 @@ int main(int argc, char* argv[])
         }
 
         char buffin[MAX];
-        char buffout[MAX];
+        char* buffout;
         while (true)
         {
             bzero(buffin, sizeof(buffin));
@@ -63,8 +65,8 @@ int main(int argc, char* argv[])
                 break;
             }
             printf("client: %s", buffin);
-            bzero(buffout, sizeof(buffout));
-
+            bzero(buffout, strlen(buffout));
+            buffout = (char*)ParseInput(buffin);
             write(new_socket, buffout, sizeof(buffout));
 
         }
