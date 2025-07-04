@@ -33,23 +33,24 @@ int main(int argc, char* argv[])
         exit(-1);
     }
 
-    char buff[MAX];
+    char buffin[MAX];
+    char buffout[MAX];
     int n;
     for (;;)
     {
-        bzero(buff, sizeof(buff));
+        bzero(buffin, sizeof(buffin));
         printf("##: ");
         n = 0;
 
-        while ((buff[n++] = getchar()) != '\n');
-        write(fd, buff, sizeof(buff));
+        while ((buffin[n++] = getchar()) != '\n');
+        write(fd, buffin, sizeof(buffin));
 
-        bzero(buff, sizeof(buff));
-        read(fd, buff, sizeof(buff));
-        if (strlen(buff) > 0)
-            printf("%s\n", buff);
+        bzero(buffout, sizeof(buffout));
+        read(fd, buffout, sizeof(buffout));
+        if (strlen(buffout) > 0)
+            printf("%s\n", buffout);
 
-        if (strncmp(buff, "exit", 4) == 0)
+        if (strncmp(buffin, "exit", 4) == 0)
             break;
     }
 
