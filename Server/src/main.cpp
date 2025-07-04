@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
             buffout = (char*)ParseInput(buffin);
             printf("client: %s", buffin);
             printf("expected out: %s\n", buffout);
-            write(new_socket, buffout, sizeof(buffout));
+            write(new_socket, buffout, strlen(buffout));
             if (strncmp(buffin, "exit", 4) == 0)
                 break;
         }
