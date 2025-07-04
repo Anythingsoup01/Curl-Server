@@ -50,6 +50,7 @@ int main(int argc, char* argv[])
             read(new_socket, buff, sizeof(buff));
             if (strncmp(buff, "exit", 4))
             {
+                printf("exit called!");
                 break;
             }
             printf("client: %s", buff);
