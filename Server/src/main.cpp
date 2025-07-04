@@ -13,7 +13,7 @@ struct sockaddr_in addr;
 
 void ParseInput(const char input[])
 {
-    if (strncmp(input, "list", 4))
+    if (strncmp(input, "list", 4) == 0)
     {
         printf("Listing all entries");
     }
