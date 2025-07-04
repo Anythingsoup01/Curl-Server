@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
         {
             bzero(buff, sizeof(buff));
             read(new_socket, buff, sizeof(buff));
-            if (strncmp(buff, "exit", 4))
+            if (strncmp(buff, "exit", 4) == 0)
             {
                 printf("exit called!");
                 break;
