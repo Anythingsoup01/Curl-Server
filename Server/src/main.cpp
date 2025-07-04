@@ -4,7 +4,6 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include <string>
 
 const int MAX = 4096;
 
@@ -12,18 +11,14 @@ int fd;
 struct sockaddr_in addr;
 
 
-char* ParseInput(const char input[])
+const char* ParseInput(const char input[])
 {
-    std::string* out = new std::string();
-    char* data;
     if (strncmp(input, "list", 4) == 0)
     {
-        out->append("listing all entries");
-        return out->data();
+        return "Listingallentries";
     }
 
-    delete(out);
-    return data;
+    return "";
 }
 
 int main(int argc, char* argv[])
