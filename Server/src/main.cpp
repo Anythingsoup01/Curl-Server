@@ -5,13 +5,41 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <string>
+
+#include <unordered_map>
+
+class ServerStorage
+{
+    public:
+        static bool PushData(const char* input)
+        {
+            // This will only come from the 'add' command, so we can ignore the first 4 bytes
+            std::string in(input); 
+            in.erase(0, 3);
+
+            printf("%s", in.c_str());
+
+            return true;
+        }
+
+        static bool RemoveData(const char* input)
+        {
+
+        }
+
+        
+    private:
+
+};
+
 const int MAX = 4096;
 
 int fd;
 struct sockaddr_in addr;
 
 
-const char* ParseInput(const char input[])
+const char* ParseInput(const char* input)
 {
     if (strncmp(input, "exit", 4) == 0)
         return "Goodbye!";
@@ -21,6 +49,26 @@ const char* ParseInput(const char input[])
 
     if (strncmp(input, "list", 4) == 0)
         return "Listing all entries";
+
+    if (strncmp(input, "add", 3) == 0)
+    {
+        if (!ServerStorage::PushData(input))
+        {
+            return "Failed to upload data!";
+        }
+
+        return "Upload successful!";
+    }
+
+    if (strncmp(input, "remove", 6) == 0)
+    {
+        if (!ServerStorage::RemoveData(input))
+        {
+            return "Failed to locate data!\nremove <key> - where key is the name you provided!";
+        }
+
+        return "Removal successful!";
+    }
 
     return "Command Not Found!";
 }
