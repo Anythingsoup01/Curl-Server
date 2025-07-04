@@ -60,14 +60,11 @@ int main(int argc, char* argv[])
         {
             bzero(buffin, sizeof(buffin));
             read(new_socket, buffin, sizeof(buffin));
-            if (strncmp(buffin, "exit", 4) == 0)
-            {
-                break;
-            }
-            printf("client: %s", buffin);
             buffout = (char*)ParseInput(buffin);
+            printf("client: %s", buffin);
             write(new_socket, buffout, sizeof(buffout));
-
+            if (strncmp(buffin, "exit", 4) == 0)
+                break;
         }
 
         close(new_socket);

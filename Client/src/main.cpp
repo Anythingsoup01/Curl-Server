@@ -39,22 +39,18 @@ int main(int argc, char* argv[])
     {
         bzero(buff, sizeof(buff));
         printf("##: ");
-
         n = 0;
 
         while ((buff[n++] = getchar()) != '\n');
-
-
         write(fd, buff, sizeof(buff));
-
-
-        if (strncmp(buff, "exit", 4) == 0)
-            break;
 
         bzero(buff, sizeof(buff));
         read(fd, buff, sizeof(buff));
-        printf("%s\n", buff);
+        if (strlen(buff) > 0)
+            printf("%s\n", buff);
 
+        if (strncmp(buff, "exit", 4) == 0)
+            break;
     }
 
     close(fd);
