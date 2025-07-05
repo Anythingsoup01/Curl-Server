@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
     }
 
     addr.sin_family = AF_INET;
-    addr.sin_addr.s_addr = inet_addr("192.168.1.125");
+    addr.sin_addr.s_addr = inet_addr(argv[1]);
     addr.sin_port = htons(8080);
     
     if (connect(fd, (struct sockaddr*)&addr, sizeof(addr)) != 0)
