@@ -16,7 +16,6 @@ project "Server"
     }
 
     links {
-        "Network"
     }
 
 project "Client"
@@ -35,19 +34,5 @@ project "Client"
     }
 
     links {
-        "Network"
     }
 
-project "Network"
-    kind "StaticLib"
-    language "C++"
-    dialect "20"
-
-    files {
-        "Network/src/*.cpp",
-        "Network/src/*.h"
-    }
-
-    includedirs {
-        "Network/src",
-    }
