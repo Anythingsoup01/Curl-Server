@@ -12,6 +12,9 @@ const int MAX = 4096;
 int fd;
 struct sockaddr_in addr;
 
+std::string EMPTYBUFFER = "EMPTYBUFFER";
+const char* emptyBuff = EMPTYBUFFER.data();
+
 int main(int argc, char* argv[])
 {
     fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -62,7 +65,10 @@ int main(int argc, char* argv[])
             read(new_socket, buffin, sizeof(buffin));
             buffout = (char*)Server::ParseInput(buffin);
             printf("client: %s", buffin);
-            write(new_socket, buffout, strlen(buffout));
+            if (strlen(buffout) > 0)
+                write(new_socket, buffout, strlen(buffout));
+            else
+                write(new_socket, emptyBuff, strlen(emptyBuff));
             if (strncmp(buffin, "exit", 4) == 0 | strncmp(buffin, "shutdown", 8) == 0)
                 break;
         }
