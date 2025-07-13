@@ -3,7 +3,10 @@
 #include <algorithm>
 #include <vector>
 #include <sstream>
+#include <fstream>
 #include <string.h>
+
+#include <iostream>
 
 const char* Server::ParseInput(const char* input)
 {
@@ -285,14 +288,23 @@ const char* Server::RunCurl()
             std::string word = key.substr(pos, nextSlash - pos);
             actualFileName.append(word);
             if (!lastIteration)
-                actualFileName.append("\\ ");
+                actualFileName.append(" ");
 
             pos = nextSlash + 1;
 
         }
-        
+
         std::stringstream ss;
-        ss << "curl '" << url << "' -A 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0' --output '" << s_SetWorkingDiretory << actualFileName << s_SetExtension << "'";
+        std::string modifiers = "";
+        std::ifstream in("serv.conf"); // looks in local directory
+        if (in.is_open())
+        {
+            std::stringstream mod;
+            mod << in.rdbuf();
+            modifiers = mod.str();
+        }
+        in.close();
+        ss << "curl '" << url << "' " << modifiers << " --output '" << s_SetWorkingDiretory << actualFileName << s_SetExtension << "'";
         if (system(ss.str().c_str()) != 0)
         {
             newList.emplace(std::make_pair(key, url));
@@ -301,7 +313,7 @@ const char* Server::RunCurl()
             s_MSG.append(err.str());
         }
     }
-
+    
     s_CurlList = newList;
 
     if (!newList.empty())
@@ -311,3 +323,4 @@ const char* Server::RunCurl()
 
     return "";
 }
+
