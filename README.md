@@ -13,12 +13,20 @@ TO USE:
 
 FROM CLIENT:
 
-  add <path/to/filename> <url> : This will add these to an array
+  set cwd <path/to/folder> : This will set the path when curl is called, YOU CANNOT SET MULTIPLE!
+  get cwd : This will return the set current working directory
 
-  remove <path/to/filename> : This will remove item from array
+  set extension <.extension> : This will set the extension when curl is called, YOU CANNOT SET MULTIPLE!
+  get extension : This will return the current extension
+  
+  add "<file\ name>' <url> : This will add these to an array
+
+  edit "<file\name>" <new_url> : This will allow you to edit the url field incase it's wrong or malformed
+
+  remove <file\name> : This will remove item from array. Due to the nature of maps/unordered_maps all spaces are removed from the key.
 
   list : This will list all files in the array
 
-  read <path/to/filename> : This will readback the url provided
+  read <file\name> : This will readback the url provided
 
   curl : This will go through the array and curl everything, if there are any errors with the curl it will tell you at the end.
