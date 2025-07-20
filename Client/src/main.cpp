@@ -6,6 +6,7 @@
 #include <strings.h> // bzero()
 #include <sys/socket.h>
 #include <unistd.h> // read(), write(), close()
+#include <netinet/tcp.h>
 
 const int MAX = 4096;
 
@@ -21,6 +22,13 @@ int main(int argc, char* argv[])
     {
         printf("Error: Failed to create Socket!");
         exit(-1);
+    }
+
+    int flag = 1;
+    if (setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, &flag, sizeof(int)) < 0)
+    {
+        printf("Failed to set socket option!");
+        return -1;
     }
 
     addr.sin_family = AF_INET;
@@ -54,6 +62,10 @@ int main(int argc, char* argv[])
 
         if (strncmp(buffin, "exit", 4) == 0 | strncmp(buffin, "shutdown", 8) == 0)
             break;
+        
+        if (strncmp(buffin, "cls", 3) == 0 | strncmp(buffin, "clear", 5) == 0)
+            system("clear");
+
     }
 
     close(fd);
