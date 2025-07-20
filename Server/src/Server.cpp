@@ -49,13 +49,17 @@ const char* Server::ParseSetInput(const char* input)
     check.erase(remove_if(check.begin(), check.end(), isspace), check.end());
     if (check.empty())
     {
-        return "Please provide a variable to set!\n set cwd path/to/directory/\n set extension .extension";
+        return "Please provide a variable to set!\n set cwd path/to/directory/\n set extension .extension\n set name Name\\Of\\Anime\n set season ##";
     }
 
     if (strncmp(in.c_str(), "cwd", 3) == 0)
         return SetWorkingDirectory(in.c_str());
     if (strncmp(in.c_str(), "extension", 9) == 0)
         return SetCurrentExtension(in.c_str());
+    if (strncmp(in.c_str(), "name", 4) == 0)
+        return SetCurrentSeriesName(in.c_str());
+    if (strncmp(in.c_str(), "season", 6) == 0)
+        return SetCurrentSeason(in.c_str());
 
     return "Unknown Variable!";
 }
@@ -75,6 +79,11 @@ const char* Server::ParseGetInput(const char *input)
         return GetWorkingDirectory();
     if (strncmp(in.c_str(), "extension", 9) == 0)
         return GetCurrentExtension();
+    if (strncmp(in.c_str(), "name", 4) == 0)
+        return GetCurrentSeriesName();
+    if (strncmp(in.c_str(), "season", 6) == 0)
+        return GetCurrentSeason();
+
     return "Unknown Variable!";
 }
 
@@ -259,6 +268,50 @@ const char* Server::GetCurrentExtension()
 {
     return s_SetExtension.empty() ? "(empty)" : s_SetExtension.c_str();
 }
+
+const char* Server::SetCurrentSeriesName(const char *input)
+{
+    std::string in(input);
+    in.erase(0, 5);
+    std::string check = in;
+    check.erase(remove_if(check.begin(), check.end(), isspace), check.end());
+    if (check.empty())
+    {
+        s_SetSeriesName = "";
+        return "";
+    }
+
+    s_SetSeriesName = check;
+    return "";
+}
+
+const char* Server::GetCurrentSeriesName()
+{
+    return s_SetSeriesName.empty() ? "(empty)" : s_SetSeriesName.c_str();
+}
+
+const char* Server::SetCurrentSeason(const char *input)
+{
+    std::string in(input);
+    in.erase(0, 7);
+    std::string check = in;
+    check.erase(remove_if(check.begin(), check.end(), isspace), check.end());
+    if (check.empty())
+    {
+        s_SetSeason = "";
+        return "";
+    }
+
+    s_SetSeason = check;
+    return "";
+
+}
+
+const char* Server::GetCurrentSeason()
+{
+    return s_SetSeason.empty() ? "(empty)" : s_SetSeason.c_str();
+}
+
 
 const char* Server::RunCurl()
 {

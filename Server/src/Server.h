@@ -23,6 +23,12 @@ public:
     static const char* SetCurrentExtension(const char* input);
     static const char* GetCurrentExtension();
 
+    static const char* SetCurrentSeriesName(const char* input);
+    static const char* GetCurrentSeriesName();
+
+    static const char* SetCurrentSeason(const char* input);
+    static const char* GetCurrentSeason();
+
     static const char* RunCurl();
 
 private:
@@ -31,4 +37,7 @@ private:
 
     static inline std::string s_SetWorkingDiretory = "";
     static inline std::string s_SetExtension = "";
+
+    static inline std::string s_SetSeriesName = "";
+    static inline std::string s_SetSeason = "";
 };
